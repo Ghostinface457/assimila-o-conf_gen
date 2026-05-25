@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Conflito — Assimilação RPG</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+
+  <!-- ══ CABEÇALHO DA PÁGINA ══ -->
+  <header class="page-header">
+    <div class="logo-tag">Assimilação RPG</div>
+    <h1>Gerador de <em>Cena de Conflito</em></h1>
+  </header>
+
+  <!-- ══ PAINEL FORMULÁRIO (esquerda) ══ -->
+  <aside class="painel-form">
+    <div class="form-body">
+
+      <!-- Informações Gerais -->
+      <section class="f-section">
+        <div class="f-section-title">Informações Gerais</div>
+
+        <div class="f-group">
+          <label>Nome do Conflito</label>
+          <input type="text" id="inp-nome" placeholder="Ex: Laboratório Contaminado">
+        </div>
+
+        <div class="f-group">
+          <label>Descrição / Cenário</label>
+          <textarea id="inp-desc" placeholder="Breve descrição do ambiente e da situação…"></textarea>
+        </div>
+
+        <div class="f-row">
+          <div class="f-group">
+            <label>D6 <img src="/assets/square-solid.png" alt="Dificuldade" class="inline-icon"></label>
+            <input type="number" id="inp-dif-q" min="0" max="9" value="2" style="text-align:center">
+          </div>
+
+          <div class="f-group">
+            <label>D10 <img src="/assets/diamond-solid.png" alt="Dificuldade" class="inline-icon"></label>
+            <input type="number" id="inp-dif-c" min="0" max="9" value="1" style="text-align:center">
+          </div>
+
+          <div class="f-group">
+            <label>D12 <img src="/assets/pentagon-solid.png" alt="Dificuldade" class="inline-icon"></label>
+            <input type="number" id="inp-dif-d12" min="0" max="9" value="1" style="text-align:center">
+          </div>
+        </div>
+      </section>
+
+      <!-- Condicionantes -->
+      <section class="f-section">
+        <div class="f-section-title">Condicionantes</div>
+        <div id="lista-condic"></div>
+        <button class="btn-add" id="btn-add-condic">+ Adicionar Condicionante</button>
+      </section>
+
+      <!-- Ativações do Conflito -->
+      <section class="f-section">
+        <div class="f-section-title">Ativações do Conflito</div>
+        <div id="lista-ativ"></div>
+        <button class="btn-add" id="btn-add-ativ">+ Adicionar Ativação</button>
+      </section>
+
+      <!-- Objetivos Principais -->
+      <section class="f-section">
+        <div class="f-section-title">Objetivos Principais</div>
+        <div id="lista-objp"></div>
+        <button class="btn-add" id="btn-add-objp">+ Adicionar Objetivo Principal</button>
+      </section>
+
+      <!-- Objetivos Secundários -->
+      <section class="f-section">
+        <div class="f-section-title">Objetivos Secundários</div>
+        <div id="lista-objs"></div>
+        <button class="btn-add" id="btn-add-objs">+ Adicionar Objetivo Secundário</button>
+      </section>
+
+    </div><!-- /form-body -->
+
+    <div class="form-footer">
+      <button class="btn-gerar" id="btn-gerar">⚔ Gerar Cena de Conflito</button>
+    </div>
+  </aside>
+
+  <!-- ══ PAINEL PREVIEW (direita) ══ -->
+  <main class="painel-preview">
+    <div class="preview-toolbar">
+      <span class="preview-toolbar-title">Pré-visualização</span>
+      <div class="preview-actions">
+        <button class="btn-export" id="btn-exp-txt">↓ Exportar Texto</button>
+        <button class="btn-export" id="btn-exp-img">↓ Exportar PNG</button>
+      </div>
+    </div>
+
+    <div class="preview-canvas">
+      <p class="preview-empty" id="preview-empty">
+        Preencha os campos ao lado<br>e clique em "Gerar Cena de Conflito"
+      </p>
+      <!-- O card renderizado é injetado aqui pelo JS -->
+      <div id="card-conflito" style="display:none;"></div>
+    </div>
+  </main>
+
+  <!-- Toast de feedback -->
+  <div id="toast"></div>
+
+  <!-- html2canvas para exportar imagem -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- Lógica da aplicação -->
+  <script src="script.js"></script>
+
+</body>
+</html>
