@@ -857,6 +857,410 @@ function gerarCard() {
     vazio.style.display = 'none';
   }
 }
+// ── EXPORTAR / IMPORTAR JSON ───────────────
+
+function coletarDadosConflito() {
+
+  return {
+
+    nome:
+      qs('#inp-nome').value.trim(),
+
+    desc:
+      qs('#inp-desc').value.trim(),
+
+    difQ:
+      parseInt(qs('#inp-dif-q').value) || 0,
+
+    difC:
+      parseInt(qs('#inp-dif-c').value) || 0,
+
+    difD12:
+      parseInt(qs('#inp-dif-d12').value) || 0,
+
+    condicionantes:
+      qsa('#lista-condic .f-item')
+        .map(el => ({
+
+          titulo:
+            qs('.cond-titulo', el).value.trim(),
+
+          desc:
+            qs('.cond-desc', el).value.trim()
+
+        })),
+
+    ativacoes:
+      qsa('#lista-ativ .f-item')
+        .map(el => ({
+
+          nome:
+            qs('.ativ-nome', el).value.trim(),
+
+          desc:
+            qs('.ativ-desc', el).value.trim(),
+
+          simbolos:
+            qsa('.simbolo-linha', el).map(linha => ({
+
+              quantidade:
+                parseInt(qs('.ativ-qtd', linha).value) || 0,
+
+              simbolo:
+                qs('.ativ-simbolo', linha).value
+
+            }))
+
+        })),
+
+    objetivosPrincipais:
+      qsa('#lista-objp .f-item')
+        .map(el => ({
+
+          nome:
+            qs('.obj-nome', el).value.trim(),
+
+          desc:
+            qs('.obj-desc', el).value.trim(),
+
+          simbolos:
+            qsa('.simbolo-linha', el).map(linha => ({
+
+              quantidade:
+                parseInt(qs('.obj-qtd', linha).value) || 0,
+
+              simbolo:
+                qs('.obj-simbolo', linha).value
+
+            }))
+
+        })),
+
+    objetivosSecundarios:
+      qsa('#lista-objs .f-item')
+        .map(el => ({
+
+          nome:
+            qs('.obj-nome', el).value.trim(),
+
+          desc:
+            qs('.obj-desc', el).value.trim(),
+
+          simbolos:
+            qsa('.simbolo-linha', el).map(linha => ({
+
+              quantidade:
+                parseInt(qs('.obj-qtd', linha).value) || 0,
+
+              simbolo:
+                qs('.obj-simbolo', linha).value
+
+            }))
+
+        }))
+  };
+}
+
+function exportarJSON() {
+
+  const dados = coletarDadosConflito();
+
+  const json =
+    JSON.stringify(dados, null, 2);
+
+  const blob =
+    new Blob([json], { type: 'application/json' });
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const nome =
+    dados.nome || 'conflito';
+
+  const a =
+    document.createElement('a');
+
+  a.href = url;
+
+  a.download =
+    `${nome.replace(/\s+/g, '_').toLowerCase()}.json`;
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+  toast('JSON exportado!');
+}
+
+function limparCampos() {
+
+  qs('#lista-condic').innerHTML = '';
+  qs('#lista-ativ').innerHTML = '';
+  qs('#lista-objp').innerHTML = '';
+  qs('#lista-objs').innerHTML = '';
+}
+
+function importarJSON(event) {
+
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = e => {
+
+    try {
+
+      const dados =
+        JSON.parse(e.target.result);
+
+      qs('#inp-nome').value =
+        dados.nome || '';
+
+      qs('#inp-desc').value =
+        dados.desc || '';
+
+      qs('#inp-dif-q').value =
+        dados.difQ || 0;
+
+      qs('#inp-dif-c').value =
+        dados.difC || 0;
+
+      qs('#inp-dif-d12').value =
+        dados.difD12 || 0;
+
+      limparCampos();
+
+      (dados.condicionantes || [])
+        .forEach(c => {
+
+          addCondicionante(
+            c.titulo,
+            c.desc
+          );
+        });
+
+      (dados.ativacoes || [])
+        .forEach(a => {
+
+          addAtivacao(
+            a.nome,
+            a.desc,
+            0
+          );
+
+          const ultimo =
+            qsa('#lista-ativ .f-item').pop();
+
+          const wrapper =
+            qs('.multi-simbolos', ultimo);
+
+          wrapper.innerHTML = '';
+
+          (a.simbolos || [])
+            .forEach(s => {
+
+              const linha =
+                document.createElement('div');
+
+              linha.className =
+                'simbolo-linha';
+
+              linha.innerHTML = `
+
+                <input
+                  type="number"
+                  class="ativ-qtd"
+                  min="0"
+                  max="20"
+                  value="${s.quantidade}"
+                  style="width:70px;text-align:center">
+
+                <select class="ativ-simbolo">
+
+                  <option value="adaptacao">
+                    Adaptação
+                  </option>
+
+                  <option value="pressao">
+                    Pressão
+                  </option>
+
+                  <option value="sucesso">
+                    Sucesso
+                  </option>
+
+                </select>
+
+                <button
+                  type="button"
+                  class="btn-remove"
+                  onclick="this.parentElement.remove()">
+
+                  ✕
+                </button>
+              `;
+
+              qs('select', linha).value =
+                s.simbolo;
+
+              wrapper.appendChild(linha);
+            });
+        });
+
+      (dados.objetivosPrincipais || [])
+        .forEach(o => {
+
+          addObjetivo(
+            'principal',
+            o.nome,
+            o.desc,
+            0
+          );
+
+          const ultimo =
+            qsa('#lista-objp .f-item').pop();
+
+          const wrapper =
+            qs('.multi-simbolos', ultimo);
+
+          wrapper.innerHTML = '';
+
+          (o.simbolos || [])
+            .forEach(s => {
+
+              const linha =
+                document.createElement('div');
+
+              linha.className =
+                'simbolo-linha';
+
+              linha.innerHTML = `
+
+                <input
+                  type="number"
+                  class="obj-qtd"
+                  min="0"
+                  max="20"
+                  value="${s.quantidade}"
+                  style="width:70px;text-align:center">
+
+                <select class="obj-simbolo">
+
+                  <option value="adaptacao">
+                    Adaptação
+                  </option>
+
+                  <option value="pressao">
+                    Pressão
+                  </option>
+
+                  <option value="sucesso">
+                    Sucesso
+                  </option>
+
+                </select>
+
+                <button
+                  type="button"
+                  class="btn-remove"
+                  onclick="this.parentElement.remove()">
+
+                  ✕
+                </button>
+              `;
+
+              qs('select', linha).value =
+                s.simbolo;
+
+              wrapper.appendChild(linha);
+            });
+        });
+
+      (dados.objetivosSecundarios || [])
+        .forEach(o => {
+
+          addObjetivo(
+            'secundario',
+            o.nome,
+            o.desc,
+            0
+          );
+
+          const ultimo =
+            qsa('#lista-objs .f-item').pop();
+
+          const wrapper =
+            qs('.multi-simbolos', ultimo);
+
+          wrapper.innerHTML = '';
+
+          (o.simbolos || [])
+            .forEach(s => {
+
+              const linha =
+                document.createElement('div');
+
+              linha.className =
+                'simbolo-linha';
+
+              linha.innerHTML = `
+
+                <input
+                  type="number"
+                  class="obj-qtd"
+                  min="0"
+                  max="20"
+                  value="${s.quantidade}"
+                  style="width:70px;text-align:center">
+
+                <select class="obj-simbolo">
+
+                  <option value="adaptacao">
+                    Adaptação
+                  </option>
+
+                  <option value="pressao">
+                    Pressão
+                  </option>
+
+                  <option value="sucesso">
+                    Sucesso
+                  </option>
+
+                </select>
+
+                <button
+                  type="button"
+                  class="btn-remove"
+                  onclick="this.parentElement.remove()">
+
+                  ✕
+                </button>
+              `;
+
+              qs('select', linha).value =
+                s.simbolo;
+
+              wrapper.appendChild(linha);
+            });
+        });
+
+      gerarCard();
+
+      toast('JSON importado!');
+
+    } catch(err) {
+
+      console.error(err);
+
+      toast('Arquivo JSON inválido.');
+    }
+  };
+
+  reader.readAsText(file);
+}
 
 // ── EXPORTAR TEXTO ──────────────────────────
 
@@ -989,6 +1393,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   qs('#btn-exp-img')
     .addEventListener('click', exportarImagem);
+    qs('#btn-exp-json')
+    .addEventListener('click', exportarJSON);
+
+  qs('#btn-imp-json')
+    .addEventListener('click', () => {
+
+      qs('#inp-import-json').click();
+    });
+
+  qs('#inp-import-json')
+    .addEventListener('change', importarJSON);
 
   carregarExemplos();
 
