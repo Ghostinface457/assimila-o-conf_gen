@@ -567,6 +567,8 @@ body::before {
   overflow: hidden;
 
   isolation: isolate;
+
+  line-height: 1.55;
 }
 
 /* manchas */
@@ -615,7 +617,7 @@ body::before {
 
   grid-template-columns: auto 1fr auto;
 
-  align-items: stretch;
+  align-items: center;
 }
 
 .c-header-tag {
@@ -638,6 +640,18 @@ body::before {
   border-right: 1px solid rgba(0,0,0,.35);
 
   text-shadow: 0 1px 2px rgba(0,0,0,.25);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 72px;
+
+  text-align: center;
+
+  line-height: 1.3;
 }
 
 .c-header-title {
@@ -648,10 +662,14 @@ body::before {
 
   justify-content: center;
 
-  padding: 10px;
+  padding: 16px 20px;
+
+  text-align: center;
 }
 
 .c-header-title span {
+
+  display: block;
 
   font-family: var(--font-display);
 
@@ -668,7 +686,7 @@ body::before {
   text-shadow:
     0 1px 0 rgba(255,255,255,.35);
 
-  line-height: 1.1;
+  line-height: 1.25;
 }
 
 .c-header-diff {
@@ -681,7 +699,15 @@ body::before {
 
   align-items: center;
 
+  justify-content: center;
+
   gap: 4px;
+
+  min-height: 72px;
+
+  padding-inline: 16px;
+
+  flex-wrap: wrap;
 }
 
 /* ─────────────────────────────────────────── */
@@ -703,9 +729,9 @@ body::before {
 
   text-align: center;
 
-  padding: 10px 22px;
+  padding: 16px 28px;
 
-  line-height: 1.5;
+  line-height: 1.7;
 
   font-style: italic;
 
@@ -726,11 +752,13 @@ body::before {
   grid-template-columns: 135px 1fr;
 
   border-bottom: 1px solid rgba(110,70,40,.35);
+
+  align-items: stretch;
 }
 
 .c-rotulo {
 
-  padding: 12px;
+  padding: 18px 14px;
 
   display: flex;
 
@@ -751,7 +779,9 @@ body::before {
 
   text-align: center;
 
-  line-height: 1.3;
+  line-height: 1.45;
+
+  display: block;
 }
 
 /* cores laterais */
@@ -799,6 +829,10 @@ body::before {
 .c-conteudo {
 
   background: rgba(255,255,255,.22);
+
+  display: flex;
+
+  flex-direction: column;
 }
 
 /* ─────────────────────────────────────────── */
@@ -808,6 +842,8 @@ body::before {
 .c-cond-bloco {
 
   border-bottom: 1px solid rgba(110,70,40,.35);
+
+  padding: 4px 0;
 }
 
 .c-cond-titulo {
@@ -820,22 +856,24 @@ body::before {
 
   color: #b24e32;
 
-  text-align: center;
+  text-align: left;
 
-  padding: 7px;
+  padding: 12px 18px 4px;
 
   text-transform: uppercase;
+
+  line-height: 1.35;
 }
 
 .c-cond-desc {
 
-  padding: 6px 16px 12px;
+  padding: 4px 18px 14px;
 
-  text-align: center;
+  text-align: left;
 
   font-size: 14px;
 
-  line-height: 1.5;
+  line-height: 1.7;
 }
 
 /* ─────────────────────────────────────────── */
@@ -848,27 +886,46 @@ body::before {
 
   grid-template-columns: auto 1fr;
 
-  gap: 10px;
+  gap: 14px;
 
-  padding: 8px 12px;
+  padding: 14px 18px;
 
   border-bottom: 1px solid rgba(110,70,40,.35);
 
-  align-items: start;
+  align-items: flex-start;
+}
+
+.c-ativ-dados {
+
+  display: flex;
+
+  align-items: center;
+
+  padding-top: 2px;
+
+  flex-wrap: wrap;
 }
 
 .c-ativ-texto {
 
-  line-height: 1.45;
+  line-height: 1.7;
 
   font-size: 14px;
+
+  text-align: left;
 }
 
 .c-ativ-texto strong {
 
+  display: inline-block;
+
+  margin-bottom: 4px;
+
   font-family: var(--font-display);
 
   color: #2a1a14;
+
+  line-height: 1.3;
 }
 
 /* ─────────────────────────────────────────── */
@@ -877,7 +934,7 @@ body::before {
 
 .c-obj-linha {
 
-  padding: 9px 14px;
+  padding: 14px 18px;
 
   border-bottom: 1px solid rgba(110,70,40,.35);
 }
@@ -888,11 +945,13 @@ body::before {
 
   align-items: center;
 
-  gap: 5px;
+  gap: 8px;
 
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 
   flex-wrap: wrap;
+
+  line-height: 1.4;
 }
 
 .c-obj-nome {
@@ -906,13 +965,19 @@ body::before {
   color: #7a241c;
 
   text-transform: uppercase;
+
+  line-height: 1.3;
 }
 
 .c-obj-desc {
 
-  line-height: 1.5;
+  line-height: 1.7;
 
   font-size: 14px;
+
+  text-align: left;
+
+  padding-left: 2px;
 }
 
 /* ─────────────────────────────────────────── */
@@ -978,11 +1043,13 @@ body::before {
 
   background: rgba(0,0,0,.04);
 
-  padding: 10px 16px;
+  padding: 14px 18px;
 
   display: flex;
 
   justify-content: space-between;
+
+  align-items: center;
 }
 
 .c-rodape span {
@@ -996,6 +1063,8 @@ body::before {
   color: #7c5634;
 
   text-transform: uppercase;
+
+  line-height: 1.3;
 }
 
 /* rasgado */
@@ -1087,15 +1156,35 @@ body::before {
   }
 }
 
-/* =============== ICONS ================== */
-.inline-icon {
-    width: 20px;          /* Ajuste o tamanho do seu ícone */
-    height: 20px;
-    vertical-align: middle; /* Alinha o ícone centralizado com a linha do texto */
-    margin-bottom: 3px;     /* Ajuste fino, se necessário */
+@media (max-width: 640px) {
+
+  .c-secao {
+
+    grid-template-columns: 1fr;
   }
 
-  
+  .c-rotulo {
+
+    justify-content: flex-start;
+
+    padding: 12px 18px;
+  }
+
+  .c-rotulo span {
+
+    text-align: left;
+  }
+}
+
+/* =============== ICONS ================== */
+
+.inline-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-bottom: 3px;
+}
+
 .simbolo-wrapper {
 
   display: inline-flex;
@@ -1105,7 +1194,6 @@ body::before {
   justify-content: center;
 
   vertical-align: middle;
-
 }
 
 .simbolo-inline {
@@ -1122,6 +1210,7 @@ body::before {
 }
 
 /* ICONS DIFICULDADE */
+
 .dado-icon-wrapper {
 
   display: inline-flex;
@@ -1130,7 +1219,7 @@ body::before {
 
   justify-content: center;
 
-  margin-inline: 2px;
+  margin-inline: 1px;
 
   vertical-align: middle;
 }
@@ -1154,7 +1243,7 @@ body::before {
 
   align-items: center;
 
-  gap: 4px;
+  gap: 5px;
 
   margin-right: 6px;
 }
@@ -1165,9 +1254,44 @@ body::before {
 
   font-size: 13px;
 
-  color: var(--ink-soft);
-
   font-weight: 700;
+
+  color: currentColor;
+}
+
+/* HEADER — branco */
+
+.c-header-diff .simbolo-stack {
+
+  color: #ffffff;
+}
+
+/* CONDICIONANTES */
+
+.c-cond-desc .simbolo-stack {
+
+  color: #b24e32;
+}
+
+/* ATIVAÇÕES */
+
+.c-ativ-dados .simbolo-stack {
+
+  color: var(--petrol);
+}
+
+/* OBJ PRINCIPAIS */
+
+.c-obj-dados .simbolo-stack {
+
+  color: #7a241c;
+}
+
+/* OBJ SECUNDÁRIOS */
+
+.c-secao .objs ~ .c-conteudo .c-obj-dados .simbolo-stack {
+
+  color: #6b1f1b;
 }
 
 .multi-simbolos {
